@@ -6,12 +6,19 @@ const PhilanthroPanda = new Client({
   user: process.env.user,
   password: process.env.password,
   database: process.env.database,
-  port: 5432,
+  port: process.env.port || 5432,
+  ssl: {
+    rejectUnauthorized: false, // this setting is super important: or it will error like Connection error Error:
+    // read ECONNRESET at TCP.onStreamRead (node:internal/stream_base_commons:217:20)
+  },
 });
 
 PhilanthroPanda.connect((err) => {
-  if (err) throw err;
-  console.log("Connected to the PhilanthroPanda database!");
+  if (err) {
+    console.error("Connection error", err.stack);
+  } else {
+    console.log("Connected to the PhilanthroPanda database!");
+  }
 });
 
 module.exports = PhilanthroPanda;

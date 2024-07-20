@@ -3,7 +3,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const port = 3001; // Change the port if necessary
+const port = process.env.port || 3001; // Change the port if necessary
 
 const db = require("../repository/db");
 app.use(cors()); // Enable CORS
