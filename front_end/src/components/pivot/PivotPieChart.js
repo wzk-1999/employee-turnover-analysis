@@ -75,11 +75,12 @@ const PivotPieChart = () => {
   const [filterOptions, setFilterOptions] = useState({});
   const [selectedFilters, setSelectedFilters] = useState({});
   const [activeDimension, setActiveDimension] = useState("Reason_for_leaving");
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:3001/api/pivot");
+        const response = await axios.get(`${API_BASE_URL}/api/pivot`);
         setData(response.data);
         const options = {};
         response.data.forEach((item) => {
@@ -105,7 +106,7 @@ const PivotPieChart = () => {
     };
 
     fetchData();
-  }, []);
+  }, [API_BASE_URL]);
 
   const handleDrop = (dimension, type) => {
     if (type === "dimension") {

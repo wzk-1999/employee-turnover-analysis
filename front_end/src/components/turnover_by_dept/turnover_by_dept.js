@@ -15,13 +15,12 @@ import "./turnover_by_dept.css"; // Make sure to import the CSS file
 
 const Turnover_by_dept = () => {
   const [data, setData] = useState([]);
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "http://127.0.0.1:3001/api/department"
-        );
+        const response = await axios.get(`${API_BASE_URL}/api/department`);
         setData(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -29,7 +28,7 @@ const Turnover_by_dept = () => {
     };
 
     fetchData();
-  }, []);
+  }, [API_BASE_URL]);
 
   const columns = useMemo(
     () => [
