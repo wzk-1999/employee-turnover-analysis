@@ -1,0 +1,29 @@
+/* Green striped table styling */
+.green-striped-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.green-striped-table th,
+.green-striped-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.green-striped-table th {
+  background-color: #4caf50; /* Green header */
+  color: white;
+}
+
+.green-striped-table tr:nth-child(even) {
+  background-color: #f2f2f2; /* Light gray for even rows */
+}
+
+.green-striped-table tr:nth-child(odd) {
+  background-color: #e6ffe6; /* Light green for odd rows */
+}
+
+.green-striped-table tr:hover {
+  background-color: #d9f2d9; /* Lighter green on hover */
+}

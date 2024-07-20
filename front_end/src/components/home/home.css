@@ -1,0 +1,65 @@
+.home-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns */
+  gap: 20px; /* Gutter between cards */
+  padding: 20px;
+  background-color: #f0f0f0;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 200px; /* Fixed width */
+  height: 200px; /* Fixed height */
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  color: #fff; /* White text for contrast */
+  transition: transform 0.2s, box-shadow 0.2s;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 20px; /* Add padding to ensure text is not too close to the edges */
+  overflow: hidden; /* Ensure the content does not overflow */
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 1.5em;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Better text shadow for readability */
+}
+
+/* Solid Colors */
+.card-1 {
+  background-color: #ff5722; /* Vibrant orange */
+}
+
+.card-2 {
+  background-color: #009688; /* Teal */
+}
+
+/* Gradient Backgrounds */
+.card-3 {
+  background: linear-gradient(
+    135deg,
+    #ff9800,
+    #f44336
+  ); /* Orange to red gradient */
+}
+
+.card-4 {
+  background: linear-gradient(
+    135deg,
+    #2196f3,
+    #673ab7
+  ); /* Blue to purple gradient */
+}

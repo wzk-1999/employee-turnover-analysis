@@ -1,0 +1,68 @@
+/* Orange striped table styling */
+.orange-striped-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.orange-striped-table th,
+.orange-striped-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.orange-striped-table th {
+  background-color: #ff6600; /* Orange header */
+  color: white;
+  position: -webkit-sticky; /* For Safari */
+  position: sticky;
+  top: 0; /* Keeps header at the top */
+  z-index: 2; /* Ensure header is above other rows */
+}
+
+.orange-striped-table tr:nth-child(even) {
+  background-color: #ffe5e5; /* Light orange for even rows */
+}
+
+.orange-striped-table tr:nth-child(odd) {
+  background-color: #ffcccc; /* Lighter orange for odd rows */
+}
+
+.orange-striped-table tr:hover {
+  background-color: #ffb3b3; /* Lighter orange on hover */
+}
+
+/* Ensures table body scrolls while header remains fixed */
+.table-container {
+  overflow-y: auto;
+  max-height: 400px; /* Adjust as needed */
+  position: relative; /* Ensures proper positioning of child elements */
+}
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-container thead {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* Ensures header and body columns align */
+}
+
+.table-container tbody {
+  display: block;
+  overflow-y: auto;
+  max-height: 400px; /* Match this with the container's max-height */
+}
+
+.table-container tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* Ensures body rows align with header */
+}
+
+.table-container th,
+.table-container td {
+  box-sizing: border-box; /* Prevents layout issues */
+}
