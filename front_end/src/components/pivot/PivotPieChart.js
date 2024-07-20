@@ -10,6 +10,7 @@ import {
 } from "recharts";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import "./PivotPieChart.css"; // Ensure you import the CSS file
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
@@ -173,7 +174,7 @@ const PivotPieChart = () => {
     const allSelected =
       selectedFilters[key]?.length === filterOptions[key]?.size;
     return (
-      <div key={key} style={{ marginBottom: "20px" }}>
+      <div key={key} className="filter-group">
         <h4>{key}</h4>
         <div>
           <input
@@ -201,20 +202,33 @@ const PivotPieChart = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "flex-start",
-          height: "100vh", // Full viewport height
-        }}
-      >
-        <div
-          style={{
-            width: "60%", // Adjust width as needed
-            padding: "20px",
-          }}
-        >
+      <div className="container">
+        <div className="chart-container">
+          <ResponsiveContainer width="100%" height={400}>
+            <PieChart>
+              <Pie
+                data={chartData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={150}
+                fill="#8884d8"
+                label
+              >
+                {chartData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="filters-container">
           <div
             style={{
               display: "flex",
@@ -222,13 +236,7 @@ const PivotPieChart = () => {
               marginBottom: "20px",
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                marginRight: "20px",
-              }}
-            >
+            <div className="draggable-items">
               {[
                 "if_internal_referance",
                 "highest_education",
@@ -266,39 +274,6 @@ const PivotPieChart = () => {
             </div>
           </div>
           <div>{renderFilter("Rank")}</div>
-        </div>
-        <div
-          style={{
-            width: "40%", // Adjust width as needed
-            padding: "20px",
-            display: "flex",
-            justifyContent: "flex-end",
-            alignItems: "flex-start",
-          }}
-        >
-          <ResponsiveContainer width="100%" height={400}>
-            <PieChart>
-              <Pie
-                data={chartData}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={150}
-                fill="#8884d8"
-                label
-              >
-                {chartData.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))}
-              </Pie>
-              <Tooltip />
-              <Legend />
-            </PieChart>
-          </ResponsiveContainer>
         </div>
       </div>
     </DndProvider>

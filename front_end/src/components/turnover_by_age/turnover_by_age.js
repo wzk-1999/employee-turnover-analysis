@@ -57,7 +57,35 @@ const Turnover_by_age = () => {
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
   return (
-    <div style={{ display: "flex" }}>
+    <div className="container">
+      <div className="chart-container">
+        <ResponsiveContainer width="100%" height={400}>
+          <PieChart>
+            <Pie
+              data={chartData}
+              dataKey="value"
+              nameKey="name"
+              cx="50%"
+              cy="50%"
+              outerRadius={150}
+              fill="#8884d8"
+              label
+            >
+              {chartData.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+            <Tooltip />
+            <Legend />
+          </PieChart>
+        </ResponsiveContainer>
+        <div className="chart-title">
+          <strong>Turnover by Age</strong>
+        </div>
+      </div>
       <div className="table-container">
         <table {...getTableProps()} className="green-striped-table">
           <thead>
@@ -84,34 +112,6 @@ const Turnover_by_age = () => {
             })}
           </tbody>
         </table>
-      </div>
-      <div style={{ flex: 1, padding: "20px" }}>
-        <ResponsiveContainer width="100%" height={400}>
-          <PieChart>
-            <Pie
-              data={chartData}
-              dataKey="value"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              outerRadius={150}
-              fill="#8884d8"
-              label
-            >
-              {chartData.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-            </Pie>
-            <Tooltip />
-            <Legend />
-          </PieChart>
-        </ResponsiveContainer>
-        <div style={{ textAlign: "center", paddingTop: "10px" }}>
-          <strong>Turnover by Age</strong>
-        </div>
       </div>
     </div>
   );

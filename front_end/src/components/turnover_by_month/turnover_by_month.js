@@ -24,8 +24,8 @@ const Turnover_by_month = () => {
         setData(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
-        console.log(`${API_BASE_URL}/api/month`);
-        console.log(`${process.env.REACT_APP_API_BASE_URL}`);
+        // console.log(`${API_BASE_URL}/api/month`);
+        // console.log(`${process.env.REACT_APP_API_BASE_URL}`);
       }
     };
 
@@ -66,7 +66,27 @@ const Turnover_by_month = () => {
   }));
 
   return (
-    <div style={{ display: "flex" }}>
+    <div className="container">
+      <div className="chart-container">
+        <ResponsiveContainer width="100%" height={400}>
+          <LineChart data={formattedData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            <YAxis domain={[yAxisMin, yAxisMax]} />
+            <Tooltip />
+            <Legend />
+            <Line
+              type="monotone"
+              dataKey="staff_num"
+              stroke="#8884d8"
+              dot={false}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+        <div className="chart-title">
+          <strong>Turnover by Month</strong>
+        </div>
+      </div>
       <div className="table-container">
         <table {...getTableProps()} className="orange-striped-table">
           <thead>
@@ -93,26 +113,6 @@ const Turnover_by_month = () => {
             })}
           </tbody>
         </table>
-      </div>
-      <div style={{ flex: 1, padding: "20px" }}>
-        <ResponsiveContainer width="100%" height={400}>
-          <LineChart data={formattedData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            <YAxis domain={[yAxisMin, yAxisMax]} />
-            <Tooltip />
-            <Legend />
-            <Line
-              type="monotone"
-              dataKey="staff_num"
-              stroke="#8884d8"
-              dot={false}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-        <div style={{ textAlign: "center", paddingTop: "10px" }}>
-          <strong>Turnover by Month</strong>
-        </div>
       </div>
     </div>
   );

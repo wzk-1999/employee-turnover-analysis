@@ -63,3 +63,15 @@
     #673ab7
   ); /* Blue to purple gradient */
 }
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .home-container {
+    grid-template-columns: 1fr; /* One column for smaller screens */
+  }
+
+  .card {
+    width: 90%; /* Full width of the container */
+    height: auto; /* Adjust height automatically */
+  }
+}

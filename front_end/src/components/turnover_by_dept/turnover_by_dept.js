@@ -58,7 +58,22 @@ const Turnover_by_dept = () => {
   const yAxisMax = maxValue + range * 0.2;
 
   return (
-    <div style={{ display: "flex" }}>
+    <div className="container">
+      <div className="chart-container">
+        <ResponsiveContainer width="100%" height={400}>
+          <BarChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="department" />
+            <YAxis domain={[yAxisMin, yAxisMax]} />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="staff_num" fill="#8884d8" />
+          </BarChart>
+        </ResponsiveContainer>
+        <div className="chart-title">
+          <strong>Turnover by Department</strong>
+        </div>
+      </div>
       <div className="table-container">
         <table {...getTableProps()} className="no-border-left-right">
           <thead>
@@ -85,21 +100,6 @@ const Turnover_by_dept = () => {
             })}
           </tbody>
         </table>
-      </div>
-      <div style={{ flex: 1, padding: "20px" }}>
-        <ResponsiveContainer width="100%" height={400}>
-          <BarChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="department" />
-            <YAxis domain={[yAxisMin, yAxisMax]} />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="staff_num" fill="#8884d8" />
-          </BarChart>
-        </ResponsiveContainer>
-        <div style={{ textAlign: "center", paddingTop: "10px" }}>
-          <strong>Turnover by Department</strong>
-        </div>
       </div>
     </div>
   );

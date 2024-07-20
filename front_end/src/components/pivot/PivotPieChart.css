@@ -1,0 +1,76 @@
+/* Base styles for layout on larger screens */
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  height: 100vh; /* Full viewport height */
+}
+
+.chart-container {
+  width: 40%; /* Adjust width as needed */
+  padding: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.filters-container {
+  width: 60%; /* Adjust width as needed */
+  padding: 20px;
+}
+
+.draggable-items {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+}
+
+.drop-zone {
+  width: 200px; /* Adjust as needed */
+  height: 100px; /* Adjust as needed */
+  border: 1px dashed gray;
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.filter-group {
+  margin-bottom: 20px;
+}
+
+.filter-group h4 {
+  margin-bottom: 10px;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 920px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .chart-container {
+    width: 100%;
+    padding: 10px;
+    order: 1; /* Ensures chart is on top */
+  }
+
+  .filters-container {
+    width: 100%;
+    padding: 10px;
+    order: 4; /* Ensures filters are at the bottom */
+  }
+
+  .draggable-items {
+    margin-right: 0; /* Removes margin for small screens */
+    margin-bottom: 10px; /* Adds space below */
+    order: 3; /* Ensures draggable items are above filters */
+  }
+
+  .drop-zone {
+    margin-left: 0; /* Removes margin for small screens */
+    order: 2; /* Ensures drop zone is above draggable items */
+  }
+
+  .filter-group {
+    margin-bottom: 15px; /* Adds some space between filter groups */
+  }
+}
