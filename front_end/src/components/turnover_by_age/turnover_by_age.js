@@ -10,9 +10,11 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import "./turnover_by_age.css"; // Make sure to import the CSS file
+import LoadingAlertAntd from "../alert/LoadingAlertAntd";
 
 const Turnover_by_age = () => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
@@ -20,8 +22,10 @@ const Turnover_by_age = () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/age`);
         setData(response.data);
+        setLoading(false); // Data has been fetched, update the loading state
       } catch (error) {
         console.error("Error fetching data:", error);
+        setLoading(false); // Stop loading on error as well
       }
     };
 
@@ -58,61 +62,67 @@ const Turnover_by_age = () => {
 
   return (
     <div className="container">
-      <div className="chart-container">
-        <ResponsiveContainer width="100%" height={400}>
-          <PieChart>
-            <Pie
-              data={chartData}
-              dataKey="value"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              outerRadius={150}
-              fill="#8884d8"
-              label
-            >
-              {chartData.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-            </Pie>
-            <Tooltip />
-            <Legend />
-          </PieChart>
-        </ResponsiveContainer>
-        <div className="chart-title">
-          <strong>Turnover by Age</strong>
-        </div>
-      </div>
-      <div className="table-container">
-        <table {...getTableProps()} className="green-striped-table">
-          <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()}>
-                    {column.render("Header")}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+      {loading ? (
+        <LoadingAlertAntd />
+      ) : (
+        <>
+          <div className="chart-container">
+            <ResponsiveContainer width="100%" height={400}>
+              <PieChart>
+                <Pie
+                  data={chartData}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={150}
+                  fill="#8884d8"
+                  label
+                >
+                  {chartData.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
                   ))}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+                </Pie>
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+            <div className="chart-title">
+              <strong>Turnover by Age</strong>
+            </div>
+          </div>
+          <div className="table-container">
+            <table {...getTableProps()} className="green-striped-table">
+              <thead>
+                {headerGroups.map((headerGroup) => (
+                  <tr {...headerGroup.getHeaderGroupProps()}>
+                    {headerGroup.headers.map((column) => (
+                      <th {...column.getHeaderProps()}>
+                        {column.render("Header")}
+                      </th>
+                    ))}
+                  </tr>
+                ))}
+              </thead>
+              <tbody {...getTableBodyProps()}>
+                {rows.map((row) => {
+                  prepareRow(row);
+                  return (
+                    <tr {...row.getRowProps()}>
+                      {row.cells.map((cell) => (
+                        <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      ))}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
     </div>
   );
 };

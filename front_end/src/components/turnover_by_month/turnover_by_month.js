@@ -12,9 +12,11 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import "./turnover_by_month.css"; // Make sure to import the CSS file
+import LoadingAlertAntd from "../alert/LoadingAlertAntd";
 
 const Turnover_by_month = () => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
@@ -22,10 +24,10 @@ const Turnover_by_month = () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/month`);
         setData(response.data);
+        setLoading(false); // Data has been fetched, update the loading state
       } catch (error) {
         console.error("Error fetching data:", error);
-        // console.log(`${API_BASE_URL}/api/month`);
-        // console.log(`${process.env.REACT_APP_API_BASE_URL}`);
+        setLoading(false); // Stop loading on error as well
       }
     };
 
@@ -67,53 +69,59 @@ const Turnover_by_month = () => {
 
   return (
     <div className="container">
-      <div className="chart-container">
-        <ResponsiveContainer width="100%" height={400}>
-          <LineChart data={formattedData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            <YAxis domain={[yAxisMin, yAxisMax]} />
-            <Tooltip />
-            <Legend />
-            <Line
-              type="monotone"
-              dataKey="staff_num"
-              stroke="#8884d8"
-              dot={false}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-        <div className="chart-title">
-          <strong>Turnover by Month</strong>
-        </div>
-      </div>
-      <div className="table-container">
-        <table {...getTableProps()} className="orange-striped-table">
-          <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()}>
-                    {column.render("Header")}
-                  </th>
+      {loading ? (
+        <LoadingAlertAntd />
+      ) : (
+        <>
+          <div className="chart-container">
+            <ResponsiveContainer width="100%" height={400}>
+              <LineChart data={formattedData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis domain={[yAxisMin, yAxisMax]} />
+                <Tooltip />
+                <Legend />
+                <Line
+                  type="monotone"
+                  dataKey="staff_num"
+                  stroke="#8884d8"
+                  dot={false}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+            <div className="chart-title">
+              <strong>Turnover by Month</strong>
+            </div>
+          </div>
+          <div className="table-container">
+            <table {...getTableProps()} className="orange-striped-table">
+              <thead>
+                {headerGroups.map((headerGroup) => (
+                  <tr {...headerGroup.getHeaderGroupProps()}>
+                    {headerGroup.headers.map((column) => (
+                      <th {...column.getHeaderProps()}>
+                        {column.render("Header")}
+                      </th>
+                    ))}
+                  </tr>
                 ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                  ))}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+              </thead>
+              <tbody {...getTableBodyProps()}>
+                {rows.map((row) => {
+                  prepareRow(row);
+                  return (
+                    <tr {...row.getRowProps()}>
+                      {row.cells.map((cell) => (
+                        <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      ))}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
     </div>
   );
 };

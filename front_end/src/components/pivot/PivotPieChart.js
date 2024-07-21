@@ -10,7 +10,8 @@ import {
 } from "recharts";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import "./PivotPieChart.css"; // Ensure you import the CSS file
+import LoadingAlertAntd from "../alert/LoadingAlertAntd";
+import "./PivotPieChart.css";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
@@ -59,8 +60,8 @@ const DropZone = ({ type, onDrop, children }) => {
       ref={drop}
       style={{
         backgroundColor: isOver ? "lightgreen" : "white",
-        width: "200px", // Adjust the width as needed
-        height: "100px", // Adjust the height as needed
+        width: "200px",
+        height: "100px",
         border: "1px dashed gray",
         padding: "10px",
         marginLeft: "10px",
@@ -76,10 +77,12 @@ const PivotPieChart = () => {
   const [filterOptions, setFilterOptions] = useState({});
   const [selectedFilters, setSelectedFilters] = useState({});
   const [activeDimension, setActiveDimension] = useState("Reason_for_leaving");
+  const [loading, setLoading] = useState(true);
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(`${API_BASE_URL}/api/pivot`);
         setData(response.data);
@@ -103,6 +106,8 @@ const PivotPieChart = () => {
         setSelectedFilters(initialFilters);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -193,7 +198,7 @@ const PivotPieChart = () => {
               }
               onChange={() => handleFilterChange(key, value)}
             />
-            <label>{String(value)}</label> {/* Convert value to string */}
+            <label>{String(value)}</label>
           </div>
         ))}
       </div>
@@ -203,6 +208,7 @@ const PivotPieChart = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="container">
+        {loading && <LoadingAlertAntd />}
         <div className="chart-container">
           <ResponsiveContainer width="100%" height={400}>
             <PieChart>
