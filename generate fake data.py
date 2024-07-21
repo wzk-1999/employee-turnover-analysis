@@ -20,8 +20,8 @@ def random_date(start, end):
     end_date = pd.to_datetime(end)
     return fake.date_between(start_date=start_date, end_date=end_date)
 
-# Generate the data
-data = {
+# Generate the initial data (300,000 records)
+initial_data = {
     'staff_id': [f'TB{str(i).zfill(7)}' for i in range(1, 300001)],
     'department': [random.choice(departments) for _ in range(300000)],
     'Age_of_leaving_job': [random.randint(20, 60) for _ in range(300000)],
@@ -34,7 +34,20 @@ data = {
 }
 
 # Create a DataFrame
-df = pd.DataFrame(data)
+df = pd.DataFrame(initial_data)
+
+# Duplicate the initial dataset 9 times
+dfs = [df.copy() for _ in range(9)]
+
+# Update staff_id for each duplicated dataset to ensure uniqueness
+for i, df_copy in enumerate(dfs):
+    start_id = 300001 + i * 300000
+    df_copy['staff_id'] = [f'TB{str(j).zfill(7)}' for j in range(start_id, start_id + 300000)]
+
+# Concatenate all datasets into a single DataFrame
+full_df = pd.concat([df] + dfs, ignore_index=True)
 
 # Save to a CSV file
-df.to_csv('staff_data.csv', index=False)
+full_df.to_csv('staff_data_large.csv', index=False)
+
+print("Dataset with 3,000,000 records has been created and saved to 'staff_data_large.csv'")
