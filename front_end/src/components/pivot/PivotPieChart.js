@@ -12,6 +12,7 @@ import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import LoadingAlertAntd from "../alert/LoadingAlertAntd";
 import "./PivotPieChart.css";
+import getNonAdjacentColors from "../publicFunction/getNonAdjacentColors";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
@@ -175,6 +176,8 @@ const PivotPieChart = () => {
     }));
   }, [filteredData, activeDimension]);
 
+  const nonAdjacentColors = getNonAdjacentColors(chartData, COLORS);
+
   const renderFilter = (key) => {
     const allSelected =
       selectedFilters[key]?.length === filterOptions[key]?.size;
@@ -223,10 +226,7 @@ const PivotPieChart = () => {
                 label
               >
                 {chartData.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
+                  <Cell key={`cell-${index}`} fill={nonAdjacentColors[index]} />
                 ))}
               </Pie>
               <Tooltip />

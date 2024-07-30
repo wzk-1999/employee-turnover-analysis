@@ -9,8 +9,7 @@ const LoadingAlertAntd = () => {
         <>
           <h1>Loading data...</h1>
           <h2> Why let you wait so long? </h2>
-          Because I don't have <b style={{ color: "red" }}>Job</b> now, so I
-          have no <b style={{ color: "red" }}>Money</b>😭,
+          Because I don't have <b style={{ color: "red" }}>Job</b> now
           <br />
           so I can only use this free but&nbsp;
           <b style={{ color: "blue" }}>
@@ -18,8 +17,8 @@ const LoadingAlertAntd = () => {
           </b>
           &nbsp;on a cloud platform to&nbsp;
           <strong style={{ color: "red", fontSize: "1.5em" }}>Deploy</strong>,
-          so the best solution is:
           <br />
+          so the best solution is:&nbsp;
           <strong style={{ color: "red", fontSize: "2em" }}>Hire Me🤪😂</strong>
         </>
       }

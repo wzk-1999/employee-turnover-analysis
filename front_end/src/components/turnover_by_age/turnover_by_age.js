@@ -11,6 +11,7 @@ import {
 } from "recharts";
 import "./turnover_by_age.css"; // Make sure to import the CSS file
 import LoadingAlertAntd from "../alert/LoadingAlertAntd";
+import getNonAdjacentColors from "../publicFunction/getNonAdjacentColors";
 
 const Turnover_by_age = () => {
   const [data, setData] = useState([]);
@@ -59,6 +60,7 @@ const Turnover_by_age = () => {
 
   // Define colors for the pie chart
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+  const nonAdjacentColors = getNonAdjacentColors(chartData, COLORS);
 
   return (
     <div className="container">
@@ -82,7 +84,7 @@ const Turnover_by_age = () => {
                   {chartData.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
-                      fill={COLORS[index % COLORS.length]}
+                      fill={nonAdjacentColors[index]}
                     />
                   ))}
                 </Pie>
